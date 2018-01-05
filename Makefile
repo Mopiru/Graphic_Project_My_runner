@@ -14,7 +14,10 @@ CFLAG	=	-l csfml-window -l csfml-system
 LIB	=	-L./lib -lmy_parallax
 
 SRC	=	src/main.c	\
-		src/get_map.c
+		src/get_map.c	\
+		src/read.c	\
+		src/chain.c	\
+		src/display_map.c
 
 OBJ	=	$(SRC:.c=.o)
 
