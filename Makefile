@@ -7,9 +7,7 @@
 
 CC	=	gcc
 
-CFLAGS	=	-g -W -Wall -Wextra -I include/ -l csfml-graphics
-
-CFLAG	=	-l csfml-window -l csfml-system
+CFLAGS	=	-g -W -Wall -Wextra -I include/
 
 LIB	=	-L./lib -lmy_parallax
 
@@ -36,7 +34,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ)
 	make -C lib/my_parallax/
-	$(CC) $(OBJ) $(CFLAGS) $(CFLAG) $(LIB) -o $(NAME)
+	$(CC) $(OBJ) $(CFLAGS) $(LIB) -o $(NAME)
 
 clean:
 	rm -f $(OBJ)
