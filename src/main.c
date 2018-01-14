@@ -32,40 +32,55 @@ t_win *master_event(t_win *window)
 	return (window);
 }
 
-t_win *master_window(t_win *window)
+t_win *game_loop(t_win *window)
 {
-	t_my_parallax *parallax = my_parallax_init(10, window->window);
-	sfRenderWindow_display(window->window);
-	while (sfRenderWindow_isOpen(window->window)) {
+	t_my_parallax *parallax = my_parallax_init(200, window->window);
+
+	set_speed_map(window->map, 10);
+	while (window->status_game->game == 1) {
 		window->time = sfClock_getElapsedTime(window->clock);
 		window->seconds = window->time.microseconds / 1000000.0;
-		if (window->seconds > 5) {
-
+		if (window->seconds > 0.02) {
+			sfClock_restart(window->clock);
+			moove_character_sprite(window);
+			window->status_game->score += 1;
 		}
-		//my_parallax(parallax, window->map->parallax);
-		//display_map(window->map, window);
+		my_parallax(parallax, window->map->parallax);
+		display_map(window->map, window);
 		master_event(window);
+		display_character(window);
+		get_instruction(window);
 		sfRenderWindow_display(window->window);
+	}
+	return(window);
+}
+
+t_win *master_window(t_win *window)
+{
+
+	sfRenderWindow_display(window->window);
+	sfRenderWindow_setFramerateLimit(window->window, 60);
+	while (sfRenderWindow_isOpen(window->window)) {
+		menu(window);
+		game_loop(window);
+		finish(window);
+		if(window->status_game->exit == 1)
+			return(0);
 	}
 	return (window);
 }
 
 int main(int argc, char **argv)
 {
-	t_win *window;
-	sfVideoMode mode = {1920, 1080, 64};
+	t_win *window = init_window(argv[1]);
 
-	window = malloc(sizeof(t_win));
-	window->head = NULL;
-	window->window = sfRenderWindow_create(mode, "my_runner"
-	, sfClose, NULL);
-	window->clock = sfClock_create();
-	window->map = get_map(argv[1]);
 	while (1) {
 		master_window(window);
+		get_instruction(window);
 		sfRenderWindow_destroy(window->window);
 		destroy(window);
-		return (0);
+		if(window->status_game->exit == 1)
+			return(0);
 	}
 	(void)argc;
 }

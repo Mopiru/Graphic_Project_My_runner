@@ -35,6 +35,35 @@ typedef enum s_type
 	OBSTACLE
 } t_type;
 
+typedef enum s_type_obj
+{
+	ZERO,
+	ONE,
+	TWO,
+	TREE,
+	FOUR,
+	FIVE,
+	SIX,
+	SEVEN,
+	HEIGHT,
+	NINE,
+	START,
+	PLAY,
+	QUIT,
+	DIE,
+	TITLE,
+	DEFEAT,
+	MENU,
+	WIN,
+	SCORE
+} t_type_obj;
+
+typedef enum s_type_character
+{
+	RUN,
+	JUMP
+} t_type_character;
+
 typedef enum s_type_obst
 {
 	SQ_CANDY_SPACE,
@@ -51,11 +80,16 @@ typedef enum s_type_block
 	FOREST
 } t_type_block;
 
-
+typedef struct s_manue
+{
+	int start;
+	int quit;
+} t_menu;
 
 typedef struct s_obj
 {
 	t_type type;
+	t_type_obj type_wall;
 	sfTexture *texture;
 	sfSprite *sprite;
 	sfVector2f pos;
@@ -75,6 +109,45 @@ typedef struct s_map
 	t_type_block type_block;
 } t_map;
 
+typedef struct s_obj_character
+{
+	t_type_character type;
+	sfTexture *texture;
+	sfSprite *sprite;
+	sfVector2f pos;
+	sfVector2f vitesse;
+	sfIntRect rect;
+	int max_sprite;
+	int weight;
+	int hight;
+	struct s_obj_character *next;
+} t_obj_character;
+
+typedef struct s_character
+{
+	t_obj_character *head;
+	int vitesse;
+	sfVector2f pos;
+} t_character;
+
+typedef struct s_get_key
+{
+	int key;
+	int key2;
+	int jump;
+} t_get_key;
+
+typedef struct s_status_game
+{
+	int menu;
+	int game;
+	int finish_game;
+	int exit;
+	long int score;
+	int win;
+
+} t_status_game;
+
 typedef struct s_win
 {
 	sfRenderWindow* window;
@@ -83,15 +156,50 @@ typedef struct s_win
 	sfClock *clock;
 	sfVector2i mouse;
 	float seconds;
+	t_get_key *key;
 	t_map *map;
+	t_type_character status;
+	t_character *character;
+	t_status_game *status_game;
 	t_obj *head;
+	t_menu *menu;
 } t_win;
 
+t_obj_character *init_chain_character(t_character *character, char *path_name, t_type_character type
+, sfIntRect init_rect);
+t_obj_character *next_sprite_character(t_obj_character *temp
+, t_win *window);
+void print_score(t_win *window);
+t_win *master_event(t_win *window);
+void add_button_quit(t_win *window);
+void add_button_play(t_win *window);
+void number_font(t_win *window);
+t_win *menu(t_win *window);
+void init_end_game(t_win *window);
+t_win *init_window(char *map);
+sfVector2f moov_character(t_obj_character *temp, t_win *window);
+int check_block(int *obstacle, t_obj_character *temp, t_win *window);
+t_get_key *init_key();
+t_win *master_window(t_win *window);
+t_obj *add_to_chain(t_win *window, char *path_name, t_type_obj type
+, sfIntRect init_rect);
+t_obj *init_chain(t_win *window, char *path_name, t_type_obj type
+, sfIntRect init_rect);
+t_win *display_character(t_win *window);
+void set_asset(t_map *map);
+int len_str(char *str);
 char *my_read(char *path);
+t_win *finish(t_win *window);
+t_win *get_instruction(t_win *window);
+t_character *init_character(void);
+t_win *moove_character_sprite(t_win *window);
 t_map *get_map(char *pathname);
-t_obj *init_chain(t_map *map, char *path_name, t_type_obst type
+t_obj *init_chain_map(t_map *map, char *path_name, t_type_obst type
 , sfIntRect inti_rect);
-t_obj *add_to_chain(t_map *map, char *path_name, t_type_obst type
+t_obj *add_to_chain_map(t_map *map, char *path_name, t_type_obst type
 , sfIntRect inti_rect);
+t_map *set_speed_map(t_map *map, int vitesse);
 t_map *display_map(t_map *map, t_win *window);
+t_obj_character *add_to_chain_character(t_character *character, char *path_name, t_type_character type
+, sfIntRect init_rect);
 #endif

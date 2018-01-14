@@ -58,6 +58,12 @@ t_my_parallax_obj *cond_pos(t_my_parallax_obj *temp, t_my_parallax *parallax, t_
 	return (temp);
 }
 
+t_my_parallax *set_speed_parallax(t_my_parallax *parallax, int vitesse)
+{
+	parallax->vitesse = vitesse;
+	return(parallax);
+}
+
 t_my_parallax *my_parallax(t_my_parallax *parallax, t_my_parallax_type type)
 {
 

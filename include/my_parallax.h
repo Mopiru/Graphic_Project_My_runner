@@ -56,8 +56,11 @@ typedef struct s_my_parallax
 
 t_my_parallax_obj *add_to_chain_parallax(t_my_parallax *window, char *path_name,
 	t_my_parallax_type type, sfIntRect inti_rect);
-t_my_parallax_obj *init_chain_parallax(t_my_parallax *window, char *path_name, t_my_parallax_type type
-, sfIntRect inti_rect);
+t_my_parallax_obj *init_chain_parallax(t_my_parallax *window, char *path_name
+, t_my_parallax_type type, sfIntRect inti_rect);
+t_my_parallax *set_speed_parallax(t_my_parallax *parallax, int vitesse);
+t_my_parallax *my_parallax_init(int vitesse, sfRenderWindow *window);
+t_my_parallax *my_parallax(t_my_parallax *parallax, t_my_parallax_type type);
 void add_desert_two(t_my_parallax *window);
 void add_desert_one(t_my_parallax *window);
 void add_candy_one_1(t_my_parallax *window);
