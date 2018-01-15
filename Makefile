@@ -7,7 +7,7 @@
 
 CC	=	gcc
 
-CFLAGS	=	-g -W -Wall -Wextra -I include/
+CFLAGS	=	-g -W -Wall -Wextra -I include/ -lc_graph_prog
 
 LIB	=	-L./lib -lmy_parallax
 
