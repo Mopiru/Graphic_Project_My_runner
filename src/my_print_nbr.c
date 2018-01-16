@@ -24,6 +24,7 @@ void print_score(t_win *window)
 	int number;
 	t_obj *temp = window->head;
 	sfVector2f pos = {1300,635};
+	int save = window->status_game->score;
 
 	while (window->status_game->score != 0) {
 		number = window->status_game->score % 10;
@@ -31,4 +32,5 @@ void print_score(t_win *window)
 		pos.x -= 45;
 		cond_print_score(window, temp, number, pos);
 	}
+	window->status_game->score = save;
 }

@@ -7,7 +7,7 @@
 
 CC	=	gcc
 
-CFLAGS	=	-g -W -Wall -Wextra -I include/ -lc_graph_prog
+CFLAGS	=	-g -W -Wall -Wextra -I include/ -l csfml-graphics -l csfml-window -l csfml-system
 
 LIB	=	-L./lib -lmy_parallax
 
@@ -24,7 +24,9 @@ SRC	=	src/main.c		\
 		src/init_window_2.c	\
 		src/menu.c		\
 		src/finish.c		\
-		src/my_print_nbr.c
+		src/my_print_nbr.c	\
+		src/re_init.c		\
+		src/tools.c
 
 OBJ	=	$(SRC:.c=.o)
 

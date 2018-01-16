@@ -40,3 +40,27 @@ t_map *set_speed_map(t_map *map, int vitesse)
 	map->vitesse = vitesse;
 	return(map);
 }
+
+t_obj *add_to_chain(t_win *window, char *path_name, t_type_obj type
+, sfIntRect init_rect)
+{
+	t_obj *new = malloc(sizeof(t_obj));
+	t_obj *save = window->head;
+
+	new->sprite = sfSprite_create();
+	new->texture = sfTexture_createFromFile(path_name, NULL);
+	sfSprite_setTexture(new->sprite, new->texture
+	, sfTrue);
+	new->pos = (sfVector2f){0,0};
+	new->vitesse = (sfVector2f){0,0};
+	new->rect = init_rect;
+	new->type_wall = type;
+	sfSprite_setTextureRect(new->sprite, new->rect);
+	sfSprite_setPosition(new->sprite, new->pos);
+	new->next = NULL;
+	while (save != NULL && save->next != NULL) {
+		save = save->next;
+	}
+	save->next = new;
+	return (new);
+}

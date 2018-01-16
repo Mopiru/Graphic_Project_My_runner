@@ -6,28 +6,6 @@
 */
 #include "my.h"
 
-t_menu *create_menu(void)
-{
-	t_menu *menu = malloc(sizeof(t_menu));
-
-	menu->start = 1;
-	menu->quit = 0;
-	return(menu);
-}
-
-t_status_game *init_status_game(void)
-{
-	t_status_game *status_game = malloc(sizeof(t_status_game));
-
-	status_game->exit = 0;
-	status_game->score = 0;
-	status_game->menu = 1;
-	status_game->finish_game = 0;
-	status_game->game = 0;
-	status_game->win = 0;
-	return(status_game);
-}
-
 void add_button_retry(t_win *window)
 {
 	t_obj *temp = malloc(sizeof(t_obj));
@@ -77,20 +55,21 @@ void init_wall(t_win *window)
 	free(temp);
 }
 
-t_win *init_window(char *map)
+t_win *init_window(char *map, int level_activate)
 {
-	sfVideoMode mode = {1920, 1080, 64};
 	t_win *window = malloc(sizeof(t_win));
+	sfVideoMode mode = {1920, 1080, 64};
 	window->head = NULL;
 	init_wall(window);
 	window->window = sfRenderWindow_create(mode, "my_runner"
 	, sfClose, NULL);
+	window->map = get_map(map, level_activate);
 	window->clock = sfClock_create();
-	window->map = get_map(map);
 	window->character = init_character();
 	window->status = RUN;
 	window->status_game = init_status_game();
 	window->key = init_key();
 	window->menu = create_menu();
+	window->status_game->level_activate = level_activate;
 	return(window);
 }

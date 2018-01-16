@@ -8,8 +8,6 @@
 
 void add_all_parallax(t_my_parallax *window)
 {
-	add_desert_one(window);
-	add_desert_two(window);
 	add_candy_one_1(window);
 	add_candy_two_1(window);
 	add_candy_tree(window);
@@ -18,10 +16,6 @@ void add_all_parallax(t_my_parallax *window)
 	add_candy_six(window);
 	add_candy_seven(window);
 	add_candy_height(window);
-	add_forest_one(window);
-	add_forest_two(window);
-	add_forest_three(window);
-	add_forest_four(window);
 
 }
 

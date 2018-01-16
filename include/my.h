@@ -101,9 +101,12 @@ typedef struct s_obj
 typedef struct s_map
 {
 	int *obstacle;
+	int *save_obstacle;
 	char *map;
+	char *save;
 	int parallax;
 	int vitesse;
+	int **level;
 	sfVector2f pos;
 	t_obj *head;
 	t_type_block type_block;
@@ -145,6 +148,8 @@ typedef struct s_status_game
 	int exit;
 	long int score;
 	int win;
+	int level;
+	int level_activate;
 
 } t_status_game;
 
@@ -170,17 +175,26 @@ t_obj_character *init_chain_character(t_character *character, char *path_name, t
 t_obj_character *next_sprite_character(t_obj_character *temp
 , t_win *window);
 void print_score(t_win *window);
+t_win *re_window(t_win *window);
 t_win *master_event(t_win *window);
+t_menu *create_menu(void);
 void add_button_quit(t_win *window);
+t_status_game *init_status_game(void);
 void add_button_play(t_win *window);
+void put_str(char *str);
 void number_font(t_win *window);
 t_win *menu(t_win *window);
+int *save_obs(int *obstacle);
+void write_h(void);
+void status_game_menue(t_win *window);
+void status_game_retry(t_win *window);
 void init_end_game(t_win *window);
-t_win *init_window(char *map);
+t_win *init_window(char *map, int level_activate);
 sfVector2f moov_character(t_obj_character *temp, t_win *window);
 int check_block(int *obstacle, t_obj_character *temp, t_win *window);
 t_get_key *init_key();
 t_win *master_window(t_win *window);
+void init_wall(t_win *window);
 t_obj *add_to_chain(t_win *window, char *path_name, t_type_obj type
 , sfIntRect init_rect);
 t_obj *init_chain(t_win *window, char *path_name, t_type_obj type
@@ -193,7 +207,7 @@ t_win *finish(t_win *window);
 t_win *get_instruction(t_win *window);
 t_character *init_character(void);
 t_win *moove_character_sprite(t_win *window);
-t_map *get_map(char *pathname);
+t_map *get_map(char *pathname, int level_activate);
 t_obj *init_chain_map(t_map *map, char *path_name, t_type_obst type
 , sfIntRect inti_rect);
 t_obj *add_to_chain_map(t_map *map, char *path_name, t_type_obst type

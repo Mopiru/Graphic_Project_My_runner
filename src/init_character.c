@@ -15,8 +15,8 @@ void add_character(t_character *character)
 	temp->max_sprite = 1870;
 	temp->weight = 85;
 	temp->hight = 160;
-	temp = add_to_chain_character(character, "./asset/santa/santa_1/jump.png"
-	, JUMP, (sfIntRect){0,0,85,170});
+	temp = add_to_chain_character(character
+	, "./asset/santa/santa_1/jump.png", JUMP, (sfIntRect){0,0,85,170});
 	temp->max_sprite = 1700;
 	temp->weight = 85;
 }
@@ -54,7 +54,6 @@ sfVector2f pos_character(t_win *window, t_obj_character *temp)
 		}
 	}
 	moov_character(temp, window);
-	temp->pos.x -= 5;
 	return (temp->pos);
 }
 

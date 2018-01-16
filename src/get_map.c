@@ -38,50 +38,71 @@ char *get_info(t_map *map)
 	return (map->map);
 }
 
-int next_line(void)
+int *get_pos_map(char *map)
 {
-	static int  i = -60;
-
-	i += 60;
-	return(i);
-}
-
-int *get_pos_map(t_map *map)
-{
-	int *pos = malloc(sizeof(int) * ((strlen(map->map) * 3) + 1));
-	int y = next_line();
+	int *pos = malloc(sizeof(int) * ((strlen(map) * 3) + 1));
+	int y = 0;
 	int x = 0;
 	int i = 1;
 
-	pos[0] = (strlen(map->map) * 3)  + 1;
-	for(int k = 0; map->map[k] != '\0'; k ++) {
+	pos[0] = (strlen(map) * 3)  + 1;
+	for(int k = 0; map[k] != '\0'; k ++) {
 		pos[i] = x * 70;
 		pos[i + 1] = y;
-		if (map->map[k] == ' ')
+		if (map[k] == ' ')
 			pos[i + 2] = 0;
-		else if (map->map[k] == '\n') {
+		else if (map[k] == '\n') {
 			pos[i + 2] = 0;
 			x = -1;
-			 y = next_line();
-		}
-		else
-			pos[i + 2] = map->map[k] - '0';
-		i += 3;
+			y += 60;
+		} else
+			pos[i + 2] = map[k] - '0';
 		x ++;
+		i += 3;
 	}
 	return(pos);
 }
 
-t_map *get_map(char *pathname)
+int **get_level(t_map *map)
+{
+	int **level = malloc(sizeof(int *) * 5);
+
+	map->map = my_read("./map/map_1");
+	map->map = get_info(map);
+	level[0] = get_pos_map(map->map);
+	free(map->map);
+	map->map = my_read("./map/map_2");
+	map->map = get_info(map);
+	level[1] = get_pos_map(map->map);
+	free(map->map);
+	map->map = my_read("./map/map_3");
+	map->map = get_info(map);
+	level[2] = get_pos_map(map->map);
+	free(map->map);
+	map->map = my_read("./map/map_4");
+	map->map = get_info(map);
+	level[3] = get_pos_map(map->map);
+	free(map->map);
+	return(level);
+}
+
+t_map *get_map(char *pathname, int level_activate)
 {
 	t_map *map = malloc(sizeof(t_map));
 
-	map->map = my_read(pathname);
+	if (level_activate == 1) {
+		map->level = get_level(map);
+		map->obstacle = save_obs(map->level[0]);
+		map->save_obstacle = save_obs(map->level[0]);
+	}else{
+		map->map = my_read(pathname);
+		map->map = get_info(map);
+		map->obstacle = get_pos_map(map->map);
+		map->save_obstacle = save_obs(map->obstacle);
+	}
 	map->vitesse = 2;
-	map->map = get_info(map);
 	map->head = NULL;
 	map->head = malloc(sizeof(t_obj));
 	set_asset(map);
-	map->obstacle = get_pos_map(map);
 	return(map);
 }

@@ -66,14 +66,34 @@ t_win *master_window(t_win *window)
 		finish(window);
 		if(window->status_game->exit == 1)
 			return(0);
+		re_window(window);
 	}
 	return (window);
 }
 
+int verify(char ** argv, int argc)
+{
+	if (argc == 2 && argv[1][0] == '-' && argv[1][1] == 'L')
+		return (1);
+	if (argc == 2 && argv[1][0] != '-')
+		return (0);
+	return(0);
+}
+
 int main(int argc, char **argv)
 {
-	t_win *window = init_window(argv[1]);
+	t_win *window;
+	int level_activate;
 
+	if(argc == 1){
+		put_str("./my_runner:     bad argument: 0 given but 1 is required\n");
+		put_str("retry whith -h\n");
+		return(84);
+	}
+	if (argc == 2 && argv[1][0] == '-' && argv[1][1] == 'h')
+		write_h();
+	level_activate = verify(argv, argc);
+	window = init_window(argv[1], level_activate);
 	while (1) {
 		master_window(window);
 		get_instruction(window);
@@ -82,5 +102,4 @@ int main(int argc, char **argv)
 		if(window->status_game->exit == 1)
 			return(0);
 	}
-	(void)argc;
 }

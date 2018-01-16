@@ -44,7 +44,7 @@ sfVector2f moov_character(t_obj_character *temp, t_win *window)
 			window->key->key = 0;
 			break;
 		case 2:
-			temp->pos.x -= 10;
+			temp->pos.x -= 15;
 			window->key->key = 0;
 			break;
 		default:
@@ -93,7 +93,8 @@ int check_block(int *obstacle, t_obj_character *temp, t_win *window)
 		black_block((sfVector2f){obstacle[i], obstacle[i + 1]}
 		, obstacle[i + 2], temp, window);
 	}
-	if(temp->pos.x < -100 || temp->pos.y < -50) {
+	if(temp->pos.x < -10 || temp->pos.y < 0 || temp->pos.x > 1920
+	- temp->weight || temp->pos.y > 1080 - 200) {
 		window->status_game->game = 0;
 		window->status_game->win = -1;
 		window->status_game->finish_game = 1;
