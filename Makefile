@@ -7,7 +7,7 @@
 
 CC	=	gcc
 
-CFLAGS	=	-g -W -Wall -Wextra -I include/ -l csfml-graphics -l csfml-window -l csfml-system
+CFLAGS	=	-g -W -Wall -Wextra -I include/ -lc_graph_prog
 
 LIB	=	-L./lib -lmy_parallax
 
